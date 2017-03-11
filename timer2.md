@@ -11,8 +11,8 @@
 
 ## 音频拉轴提高效率    
 
-首先音频栏下的3个auto都可以打开  
-* automatically commit changes  
+首先，经过尝试， 音频栏下的3个auto都激活会比较顺手。
+* automatically commit changes  
 * automatically go to next line after commit  
 * auto scroll audio display to selected lines  
     
@@ -32,8 +32,7 @@
 
 ## 双语字幕    
 
-如果翻译蛋疼到做了双语字幕下面是一些经验：  
-
+如果翻译蛋疼到做了双语字幕(如kk)下面是一些经验：
 * 双语的文本 必须一一对应，一些可以显示行数的文本编辑器是必须的，比如notepad++  
 * 拉好一语种文本，然后另一种语言只需要将开始结束时间复制过去即可，操作为：   
     * 选中拉好的行，ctrl+c  
