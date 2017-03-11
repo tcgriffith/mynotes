@@ -11,7 +11,7 @@
 
 ## 音频拉轴提高效率    
 
-首先音频栏下的3个auto都可以打开
+首先音频栏下的3个auto都可以打开  
     - automatically commit changes  
     - automatically go to next line after commit  
     - auto scroll audio display to selected lines  
