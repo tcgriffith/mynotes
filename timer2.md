@@ -12,9 +12,10 @@
 ## 音频拉轴提高效率    
 
 首先音频栏下的3个auto都可以打开  
-    - automatically commit changes  
-    - automatically go to next line after commit  
-    - auto scroll audio display to selected lines  
+    * automatically commit changes  
+    * automatically go to next line after commit  
+    * auto scroll audio display to selected lines  
+    
 熟悉基本拉轴流程之后，使用快捷键可以进一步提高效率。下面是我常用的快捷键，完整的快捷键及设置可以在`view-option-hotkey` 里找到:  
 
 >`G 保存当前行修改，切换到下一行` 与回车键功能一致，不过更适合左手  
