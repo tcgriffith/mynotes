@@ -82,6 +82,7 @@ Aegisub 提供了时间轴后处理的工具，用于解决前后轴时间连续
 
 ## 扩展链接  
 [Aegisub 中文手册](http://aegi.vmoe.info/docs/3.2/Main_Page/) 
+
 [Aegisub manual](http://docs.aegisub.org/3.2/Main_Page/)
 
 
