@@ -1,0 +1,127 @@
+---
+title: "如何用megui压制小档"
+author: "来一发就走字幕组_莱姆籽"
+output:
+  html_document:
+    toc: true
+    number_sections: true
+---
+
+```{r setup, include=FALSE}
+knitr::opts_chunk$set(cache=TRUE, echo = FALSE)
+
+download_and_or_load <- function(x) {
+  y <- x[!(x %in% installed.packages()[, "Package"])]
+  if (length(y)){
+  install.packages(y, dependencies = TRUE)
+  }
+  sapply(x, require, character.only = TRUE)
+}
+
+my_libraries <- c("ggplot2", "dplyr", "purrr","citr","knitr","xtable","pander")
+download_and_or_load(my_libraries)
+```
+
+
+
+# 待剪切影片准备(略)
+
+# 记录cut时间点（帧） 
+
+## 使用Aeguisub记录帧数
+
+<p align="center"><img src="https://i.imgur.com/tWwMvDe.jpg" /></p>
+
+
+使用``键反复确认该帧是广告后的第一帧/广告前一帧
+
+## 记下来
+
+
+```{r echo=FALSE,results = 'asis'}
+clip <- c(1,2)
+start_frame <- c(1016,22000)
+end_frame <- c(25000,30000)
+
+d <-data.frame(clip,start_frame,end_frame)
+pander::pandoc.table(d)
+```
+
+## **重要** 调整帧数延迟
+
+**重要的一步！！！** Aegisub中确认的帧数，直接使用到megui中，会有20帧错位^[笔者的数据，根据软件版本和电脑不同数据可能不同，具体请自行测试]
+
+也就是说，用aegisub的数据，直接剪的话，会比预判效果提前20帧，因此，我们在原有的数据基础上，往后推延20帧,如下
+```{r echo=FALSE,results = 'asis'}
+clip <- c(1,2)
+new_start_frame <- c(1016,22000)
+new_end_frame <- c(25000,30000)
+
+d <-data.frame(clip,new_start_frame=new_start_frame+20,new_end_frame=new_end_frame+20,delay=20)
+pander::pandoc.table(d)
+```
+
+# Megui cut和压制
+
+## 创建AVS
+
+<p align="center"><img src="https://i.imgur.com/STeDifj.png" /></p>
+
+选择 `Tools-AVS script creator` 
+
+<p align="center"><img src="https://i.imgur.com/IIRbmns.png" /></p>
+
+拖进来
+
+<p align="center"><img src="https://i.imgur.com/q28B9af.png" /></p>
+
+选择direct show source
+
+<p align="center"><img src="https://i.imgur.com/vRVzuBR.png" /></p>
+
+修改分辨率之后保存
+
+## 创建剪切文件
+
+<p align="center"><img src="https://i.imgur.com/jSQszLW.png" /></p>
+
+选择tools—AVS cutter
+
+<p align="center"><img src="https://i.imgur.com/Rx9950w.png" /></p>
+
+选择刚刚创建的AVS
+
+<p align="center"><img src="https://i.imgur.com/twcPk5u.png" /></p>
+
+数据输入进去，分别添加
+
+<p align="center"><img src="https://i.imgur.com/77ZxV4C.png" /></p>
+
+全部添加完，选择do all and close
+
+<p align="center"><img src="https://imgur.com/1WNr6XQ.png" /></p>
+
+把CLT  TS文件分别拖进去
+
+## **重要** 调整声音延迟
+
+<p align="center"><img src="https://i.imgur.com/htn5Lo0.png" /></p>
+
+若声音比画面晚出现，则为负数，反之为正数
+一般情况不超过100ms（不确定的话，请先剪2分钟测试一下）
+
+## 压制
+
+<p align="center"><img src="https://i.imgur.com/fXujvTk.png" /></p>
+
+<p align="center"><img src="https://i.imgur.com/9MijMZg.png" /></p>
+
+设置压制参数，这里只需修改码率，一般小档800足矣
+
+<p align="center"><img src="https://i.imgur.com/5LX1E2u.png" /></p>
+
+<p align="center"><img src="https://i.imgur.com/GSne6wV.png" /></p>
+
+选择无尺寸要求，点队列，开始压制
+
+# 上传（略）
