@@ -1,16 +1,16 @@
 ---
-title: "如何用megui压制小档"
-author: "来一发就走字幕组_莱姆籽"
+title: "来一发megui吧！"
+author: "莱姆籽(来一发就走字幕组)"
+date: '`r Sys.Date()`'
 output:
   html_document:
     toc: true
+    toc_float: true
     number_sections: true
-    fig_width: 7
-    fig_height: 6
 ---
 
 ```{r setup, include=FALSE}
-knitr::opts_chunk$set(cache=TRUE, echo = FALSE)
+knitr::opts_chunk$set(cache=TRUE, echo = FALSE,results = 'asis')
 
 download_and_or_load <- function(x) {
   y <- x[!(x %in% installed.packages()[, "Package"])]
@@ -22,22 +22,169 @@ download_and_or_load <- function(x) {
 
 my_libraries <- c("ggplot2", "dplyr", "purrr","citr","knitr","xtable","pander")
 download_and_or_load(my_libraries)
+
+setpic <- function(url){
+# cat is inevitable to use " in the quote, avoiding \"
+  return(cat(paste0("<p align=\"center\"><img src=\"",url,"\" /></p>")))
+}
+```
+# 如何用Megui压制视频
+
+## 准备工作
+安装如下软件
+
+- 安装[MeGUI](https://sourceforge.net/projects/megui/)
+  
+- 安装[K-Lite_Codec](http://www.codecguide.com/download_kl.htm)
+  
+- 在开始菜单程序里的`MeGUI Chinese language`目录里安装K-Lite_Codec_Pack解码器^[如果装了别的解码比如Win7专用Win7codecs解码包就不用再安装额外的解码了免得有冲突]
+
+- 安装完美解码-PureCodec
+
+> **安装设置解码器 (解决加载字幕问题)**
+
+    在创建AVS脚本时，很多不明的问题常常出现。就是因为解码这一环节，比如系统装过很多自带解码的播放器，如，暴风影音、QQ影音、KMplayer等内置有解码块的，这就造成再次安装解码器时出现不稳定的情况，应该卸载这类播放器，在进行安装，必要时重做系统只安装推荐的一个解码器。大量的试用证明：K-Lite_Codec_Pack强烈建议用在专用压制机器上，在win7系统上更稳定，若是只做来学习用的机器，强烈建议安装【完美解码】因为它比较容易设置更改各类型视频格式的解码器，在压制时可随设置随观察AVS的预览变化。
+    为了解决TS、TP 等MPEG-2视频在AVS下不能正确加载显示字幕包括特效字幕压制问题，特别说明一下安装解码器的一些设置。
+    首先以安装K-Lite_Codec_Pack为例：正常化默认安装到第三步，如下图，应该选择MPEG-2,DVD这一项使用ffdshow(libavcodec)或者是ffdshow(libmpeg2)任何一个作业解码。
+  
+```{r }
+setpic("https://i.imgur.com/3MqCOUw.jpg")
+```
+
+    简单的一步就可以解决一个大问题，如果事先安装了没有知道选择这一项，也可以在解码器的安装菜单栏文件夹里找到设置更改项修改（这里不介绍如何修改了，自动摸索吧），windows xp比较容易设置，windows 7就有点复杂，建议没能显示字幕的朋友卸载解码器重新安装选择一下更省力，或者用完美解码一类的解码器安装后比较容易设置。
+    W1in7专用解码Win7codecs安装到最后可以设置如下：
+
+```{r }
+setpic("https://i.imgur.com/KV0ujUM.jpg")
+```
+
+    其它的解码器也是一样的，为什么要这样设置才可以加载字幕呢？这应该是解码器对视频硬解码和软解码的问题导致内部外挂字幕滤镜VSFilter.dll失效，通过试测硬解时TS、TP视频无法加载字幕包括特效字幕，调设为软解时就可以正常显示。在硬解与软解下看avs播放的占用率, 硬解比软解利用率更高,估计是倒来倒去的关系，cpu-显卡-cpu，而软解只是在cpu内部，这些设置不关系到视频压制的编码质量。
+    
+
+## 创建AVS脚本
+
+可在上面编辑代码，对视频进行处理
+
+`选择 脚本创建器`
+```{r}
+setpic("https://i.imgur.com/wBKo4fz.png")
+```
+
+```{r}
+setpic("https://i.imgur.com/95C12u8.png")
+```
+
+选择打开视频的方式（一般选DirectShow…，若预览视频出现黑屏现象，可重新创建avs选择File Indexer方式）
+
+```{r}
+setpic("https://i.imgur.com/RgYRTyQ.png")
+```
+
+调整视频尺寸
+
+```{r}
+setpic("https://i.imgur.com/JKrhh4I.png")
+```
+
+若视频本身比预定的尺寸小，在这里是调不了的，需要点到script部分，手动修改代码
+
+```{r}
+setpic("https://i.imgur.com/iqfijjQ.png")
+```
+
+添加字幕
+
+```{r}
+setpic("https://i.imgur.com/PVRyva5.png")
 ```
 
 
 
-# 待剪切影片准备(略)
+点击保存即可
 
-# 记录cut时间点（帧） 
+```{r}
+setpic("https://i.imgur.com/btCTV3f.png")
+```
 
-## 使用Aeguisub记录帧数
+
+## 配置输出参数
+
+先在这里选择X264
+
+```{r}
+setpic("https://i.imgur.com/kUNpedg.png")
+```
+
+点击config（配置）弹出窗口
+
+```{r}
+setpic("https://i.imgur.com/SwfGMp5.png")
+```
+
+```{r}
+setpic("https://i.imgur.com/sRkiyNo.png")
+```
+
+所有参数可参考本图中的进行设置一般不会出错
+
+码率部分（bitrate）每次输出时修改来控制视频质量
+
+以下部分，除了“主要“可以在每次压制时进行调整，其他都一次性设置之后都不用修改
+
+```{r}
+setpic("https://i.imgur.com/EPmKKV6.png")
+```
+
+```{r}
+setpic("https://i.imgur.com/6YIIS0W.png")
+```
+
+```{r}
+setpic("https://i.imgur.com/XiBX8Jx.png")
+```
+
+## 调整声音延迟
+
+```{r}
+setpic("https://i.imgur.com/jeAetjv.png")
+```
+
+    若声音比画面晚出现，则为负数，反之为正数
+    一般情况不超过50ms（不确定的话，先剪2分钟测试一下）
+    
+设置好后点ok（确定）即可
+
+## 压制
+
+点击 `AutoEncode`
+
+```{r}
+setpic("https://i.imgur.com/9P48VoS.png")
+```
+
+勾选无目标尺寸—队列即可开始压制
+
+```{r}
+setpic("https://i.imgur.com/KTRoxGp.png")
+```
+
+
+***
+
+# 如何用Megui剪辑视频
+
+## 待剪切影片准备(略)
+
+## 记录cut时间点（帧） 
+
+### 使用Aeguisub记录帧数
 
 <p align="center"><img src="https://i.imgur.com/tWwMvDe.jpg" /></p>
 
 
 使用``键反复确认该帧是广告后的第一帧/广告前一帧
 
-## 记下来
+### 记下来
 
 
 ```{r echo=FALSE,results = 'asis'}
@@ -49,7 +196,7 @@ d <-data.frame(clip,start_frame,end_frame)
 pander::pandoc.table(d)
 ```
 
-## **重要** 调整帧数延迟
+### **重要** 调整帧数延迟
 
 **重要的一步！！！** Aegisub中确认的帧数，直接使用到megui中，会有20帧错位^[笔者的数据，根据软件版本和电脑不同数据可能不同，具体请自行测试]
 
@@ -63,9 +210,9 @@ d <-data.frame(clip,new_start_frame=new_start_frame+20,new_end_frame=new_end_fra
 pander::pandoc.table(d)
 ```
 
-# Megui cut和压制
+## Megui cut和压制
 
-## 创建AVS
+### 创建AVS
 
 <p align="center"><img src="https://i.imgur.com/STeDifj.png" /></p>
 
@@ -83,7 +230,7 @@ pander::pandoc.table(d)
 
 修改分辨率之后保存
 
-## 创建剪切文件
+### 创建剪切文件
 
 <p align="center"><img src="https://i.imgur.com/jSQszLW.png" /></p>
 
@@ -105,14 +252,14 @@ pander::pandoc.table(d)
 
 把CLT  TS文件分别拖进去
 
-## **重要** 调整声音延迟
+### **重要** 调整声音延迟
 
 <p align="center"><img src="https://i.imgur.com/htn5Lo0.png" /></p>
 
 若声音比画面晚出现，则为负数，反之为正数
 一般情况不超过100ms（不确定的话，请先剪2分钟测试一下）
 
-## 压制
+### 压制
 
 <p align="center"><img src="https://i.imgur.com/fXujvTk.png" /></p>
 
@@ -126,4 +273,102 @@ pander::pandoc.table(d)
 
 选择无尺寸要求，点队列，开始压制
 
-# 上传（略）
+## 上传（略）
+
+***
+
+# 在字幕中加入图片
+
+本方法，是通过在ass字幕文件中添加语句，设定好位置大小和时间后，在avs中调用dll方可添加成功
+
+## 准备图片素材
+
+- 保存为png格式
+
+- 在ps中设置好尺寸和透明度，并记好数据
+
+- 位置和文件名必须全英文
+
+## 在Aegisub中设置位置
+
+  首先在第一行添加如下代码 ，并设置出现和消失的时间
+```
+{\p1\1img(H:/xxx.png)\bord0\shad0\pos(x,y)}m 0 0 l 0 100 l 230 100 l 230 0\N
+```
+
+`m 0 0 l 0 100 l 230 100 l 230 0`部分为尺寸设置
+
+**说明：图片大小严格按照做图时的来输入，否则会出现重复图案的情况**
+
+效果如图所示
+
+```{r}
+setpic("https://i.imgur.com/KKwMnVX.png")
+```
+  
+    
+> **想要aegisub可以显示图片，需要进行一些设置**
+
+- 首先在根目录，放置[VSFilterMod.dll]()
+
+```{r}
+setpic("https://i.imgur.com/EGzfYVJ.png")
+```
+
+- 在软件中要到设置，按照如图所示选择该滤镜即可
+
+```{r}
+setpic("https://i.imgur.com/gAg2xfJ.png")
+```
+
+
+## 脚本代码设置
+
+1. 添加VSFilterMod.dll文件
+
+2. 字幕那里添加3个字母，注意大小写
+
+```{r}
+setpic("https://i.imgur.com/FO5J3B5.png")
+```
+
+最后保存即可进行压制
+
+
+
+***
+
+# 压制片头
+只需在avs脚本添加如下代码
+
+```
+A=LWLibavVideoSource("F:\片头名.mp4",threads=1).LanczosResize(1280,720).AssumeFPS("ntsc_video")
+B=LWLibavAudioSource("F:\ 片头名.ac3").ResampleAudio(48000)
+E=AudioDub(A,B)
+
+C=LWLibavVideoSource("F:\正片名.mp4",threads=1).LanczosResize(1280,720).AssumeFPS("ntsc_video").textsubmod("F:\字幕名 .ass")
+D=LWLibavAudioSource("F:\ 片名.ac3").ResampleAudio(48000)
+F=AudioDub(C,D)
+return E+F
+```
+
+```
+## 说明
+## A=片头  B=片头音频 E=整个片头影音
+## C=正片  D=正片音频 F=整个正片影音
+## E+F=一个完整的视频
+```
+
+效果如下
+
+```{r}
+setpic("https://i.imgur.com/6C6MuEP.png")
+```
+
+
+> 注意要点
+
+
+    素材 : 分辨率、x264参数要一样，音频部分:编码方式、采样率要一样！！（音频可使用小丸工具箱统一提取压制）
+    引用地址和文件名：全英文！！最好的办法是放在某盘的根目录下
+    
